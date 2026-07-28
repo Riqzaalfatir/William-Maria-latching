@@ -33,7 +33,7 @@ const Quote = () => {
       <ResponsivePicture
         mobileSrc="/images/quote/Item.webp"
         desktopSrc="/images/quote/Item1D.svg"
-        alt="William"
+        alt="Love story milestones"
         width={247}
         height={92}
         fill={false}
@@ -144,7 +144,7 @@ const Quote = () => {
         <ResponsivePicture
           mobileSrc="/images/quote/Bg-Quotee.webp"
           desktopSrc="/images/quote/Quote.webp"
-          alt="Nicholas & Clara"
+          alt="Background Quote"
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           objectPositionMobile="top"
           objectPositionDesktop="center"

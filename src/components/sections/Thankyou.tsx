@@ -43,7 +43,7 @@ const Thankyou = () => {
               </p>
               <Image
                 src="/images/thankyou/Peletin.png"
-                alt="William"
+                alt="Peletin"
                 width={250}
                 height={252}
                 className="h-auto w-[44px] lg:w-[62px]"
@@ -55,7 +55,7 @@ const Thankyou = () => {
               </p>
               <Image
                 src="/images/thankyou/Provite.png"
-                alt="William"
+                alt="Provite"
                 width={250}
                 height={252}
                 className="mt-[4.5px] lg:mt-[5px] h-auto w-[62px] lg:w-[89px]"
