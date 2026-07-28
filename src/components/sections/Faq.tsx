@@ -5,7 +5,9 @@ import { faqData } from "../data/faq";
 import { motion } from "framer-motion";
 import { fadeUp } from "@/lib/animation";
 
-const Faq = () => {
+type FaqProps = { data?: any };
+
+const Faq = ({ data }: FaqProps) => {
   const [openIndex, setOpenIndex] = useState<string | null>(null);
 
   const toggle = (key: string) => {

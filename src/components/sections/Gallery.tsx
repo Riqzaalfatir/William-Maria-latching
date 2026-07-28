@@ -9,6 +9,8 @@ import "yet-another-react-lightbox/plugins/counter.css";
 import { motion, PanInfo } from "framer-motion";
 import ResponsivePicture from "@/hooks/ResponsivePicture";
 
+type GalleryProps = { data?: any };
+
 const galleryImages = [
   { mobile: "/images/gallery/Pengantin.webp", desktop: "/images/gallery/PengantinD.webp" },
   { mobile: "/images/gallery/Pengantin2.webp", desktop: "/images/gallery/PengantinD.webp" },
@@ -18,7 +20,7 @@ const galleryImages = [
 
 const AUTO_SLIDE_INTERVAL = 4000; // ms
 
-const Gallery = () => {
+const Gallery = ({ data }: GalleryProps) => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [current, setCurrent] = useState(0);
   const [trackWidth, setTrackWidth] = useState(0);

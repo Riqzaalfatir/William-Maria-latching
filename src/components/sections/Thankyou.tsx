@@ -3,7 +3,9 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { fadeUp } from "@/lib/animation";
 
-const Thankyou = () => {
+type ThankyouProps = { data?: any };
+
+const Thankyou = ({ data }: ThankyouProps) => {
   return (
     <section className="">
       <div className="pt-[656px] pb-[31px] lg:pt-[673px] lg:pb-[50px]">

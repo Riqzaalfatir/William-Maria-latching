@@ -9,7 +9,11 @@ type LinkMenu = {
   link: string;
 };
 
-const Header = () => {
+type HeaderProps = {
+  data?: any; // Header gak butuh personalisasi data, ini cuma biar TypeScript gak nolak prop dari page.tsx
+};
+
+const Header = ({ data }: HeaderProps) => {
   const [open, setOpen] = useState<boolean>(false);
 
   const linkMenu: LinkMenu[] = [

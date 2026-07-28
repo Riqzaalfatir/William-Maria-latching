@@ -18,7 +18,11 @@ type RsvpProps = {
   };
   guestName?: string;
   guestPhone?: string;
-  pin?: number;
+  pin?: string | null;
+  guest?: any;
+  sessions?: any;
+  rsvpData?: any;
+  url?: string;
 };
 
 // ── Types buat draft submitRsvp (belum dipakai beneran) ──
@@ -41,7 +45,7 @@ type RsvpSessionPayload = {
 type RsvpSubmitPayload = {
   eventId: string;
   url: string;
-  pin: number;
+  pin: string;
   name: string;
   phone: string;
   status: number; // TODO: tim belum konfirmasi angka mana = Attend / Maybe / Not-Attend
@@ -99,7 +103,7 @@ const Rsvp = ({ data, guestName, guestPhone, pin }: RsvpProps) => {
     const payload: RsvpSubmitPayload = {
       eventId: data?.id ?? "",
       url: data?.url ?? "",
-      pin: pin ?? 0,
+      pin: pin ?? "",
       name: guestName ?? "",
       phone: guestPhone ?? "",
       status: mapPilihanToStatus(pilihan),

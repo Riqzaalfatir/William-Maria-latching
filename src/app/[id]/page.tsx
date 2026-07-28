@@ -83,7 +83,6 @@ export default function EventPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, searchParams]);
 
-  // Effect terpisah: begitu `pin` state ke-set, baru fetch guest & RSVP data
   useEffect(() => {
     if (id && pin) {
       getEventGuestByPin(id, pin);
@@ -173,10 +172,8 @@ export default function EventPage() {
           <Quote data={dataEvent} />
           <Rsvp
             data={dataEvent}
-            guest={dataGuest}
-            sessions={dataSession}
-            rsvpData={dataRsvp}
-            url={id}
+            guestName={dataGuest?.name}
+            guestPhone={dataGuest?.phone}
             pin={pin}
           />
           <Faq data={dataEvent} />

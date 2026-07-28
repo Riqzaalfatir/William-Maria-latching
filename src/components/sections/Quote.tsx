@@ -5,7 +5,9 @@ import { fadeUp } from "@/lib/animation";
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import ResponsivePicture from "@/hooks/ResponsivePicture";
 
-const Quote = () => {
+type QuoteProps = { data?: any };
+
+const Quote = ({ data }: QuoteProps) => {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 
 type PesanItem = {
-  id: number;
+  id: string | number;
   nama: string;
   pesan: string;
 };
