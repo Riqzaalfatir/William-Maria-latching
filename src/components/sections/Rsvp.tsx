@@ -201,17 +201,6 @@ const Rsvp = ({ data, guestName, guestPhone, pin }: RsvpProps) => {
               </button>
 
               <button
-                onClick={() => setPilihan(pilihan === "maybe" ? null : "maybe")}
-                className={`h-[5.13vw] w-[18.97vw] lg:h-[30px] lg:w-[113px] flex items-center justify-center font-athelas text-[3.08vw] rounded-[5px] lg:text-[18px] lg:rounded-[7px] transition-colors duration-200 ${
-                  pilihan === "maybe"
-                    ? "bg-[#878787] text-white"
-                    : "border border-[0.5px] border-[#878787] bg-[#E2DEDF] text-white"
-                }`}
-              >
-                MAYBE
-              </button>
-
-              <button
                 onClick={() =>
                   setPilihan(pilihan === "tidak_hadir" ? null : "tidak_hadir")
                 }
@@ -304,8 +293,6 @@ const Rsvp = ({ data, guestName, guestPhone, pin }: RsvpProps) => {
 };
 
 export default Rsvp;
-
-
 
 
 
