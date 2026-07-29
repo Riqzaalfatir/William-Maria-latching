@@ -56,9 +56,10 @@ const EventOrder = ({ data }: EventOrderProps) => {
     sessions[0];
 
   const receptionSession =
-    sessions.find((item) => item.name?.toLowerCase().includes("reception")) ??
-    sessions.find((item) => item.name?.toLowerCase().includes("cocktail")) ??
-    sessions[1];
+  sessions.find((item) => item.name?.toLowerCase().includes("dinner")) ??
+  sessions.find((item) => item.name?.toLowerCase().includes("reception")) ??
+  sessions.find((item) => item.name?.toLowerCase().includes("cocktail")) ??
+  sessions[1];
 
   const ceremonyTime = formatSessionTime(ceremonySession?.date);
   const receptionTime = formatSessionTime(receptionSession?.date);
