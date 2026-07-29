@@ -25,7 +25,6 @@ type RsvpProps = {
   url?: string;
 };
 
-// ── Types buat draft submitRsvp (belum dipakai beneran) ──
 type RsvpQuestionAnswer = {
   id: string;
   answer: string;
@@ -36,10 +35,10 @@ type RsvpQuestionAnswer = {
 
 type RsvpSessionPayload = {
   eventSessionId: string;
-  guestInvitation: number; // TODO: tim belum jelasin arti angka ini
+  guestInvitation: number; 
   questions: RsvpQuestionAnswer[];
-  guestAttendances: RsvpQuestionAnswer[]; // TODO: struktur object udah confirmed,
-                                            // tapi isi/mapping-nya ke nama+tipe tamu belum jelas
+  guestAttendances: RsvpQuestionAnswer[]; 
+                                            
 };
 
 type RsvpSubmitPayload = {
@@ -48,21 +47,19 @@ type RsvpSubmitPayload = {
   pin: string;
   name: string;
   phone: string;
-  status: number; // TODO: tim belum konfirmasi angka mana = Attend / Maybe / Not-Attend
-  maybeDate: string; // TODO: belum confirmed
-  maybeNote: string; // TODO: belum confirmed
+  status: number; 
+  maybeDate: string; 
+  maybeNote: string; 
   questionList: RsvpSessionPayload[];
 };
 
-// PLACEHOLDER SEMENTARA — urutan angka ini cuma tebakan, BUKAN dari tim
 function mapPilihanToStatus(pilihan: Pilihan): number {
-  if (pilihan === "hadir") return 0; // TODO: konfirmasi
-  if (pilihan === "maybe") return 1; // TODO: konfirmasi
-  if (pilihan === "tidak_hadir") return 2; // TODO: konfirmasi
+  if (pilihan === "hadir") return 0; 
+  if (pilihan === "maybe") return 1; 
+  if (pilihan === "tidak_hadir") return 2; 
   return 0;
 }
 
-// Format ISO date jadi "Sunday, 16 August 2026"
 function formatDeadlineDate(dateString?: string): string {
   if (!dateString) return "TBA";
   const date = new Date(dateString);
@@ -73,8 +70,6 @@ function formatDeadlineDate(dateString?: string): string {
   return `${weekday}, ${day} ${month} ${year}`;
 }
 
-// invitationWAUrl formatnya "+6285183354835" (ada tanda +),
-// tapi link wa.me butuh angka doang tanpa "+"
 function formatWaHref(waUrl?: string): string {
   const fallback = "6281234567890";
   if (!waUrl) return fallback;
@@ -97,8 +92,6 @@ const Rsvp = ({ data, guestName, guestPhone, pin }: RsvpProps) => {
     setModalType("confirm_rsvp");
   };
 
-  // DRAFT — belum dipanggil di manapun, cuma disiapin dulu.
-  // JANGAN dipakai submit beneran sebelum blocker status/per-sesi selesai ditanya ke tim.
   const submitRsvp = async (): Promise<void> => {
     const payload: RsvpSubmitPayload = {
       eventId: data?.id ?? "",
@@ -109,7 +102,7 @@ const Rsvp = ({ data, guestName, guestPhone, pin }: RsvpProps) => {
       status: mapPilihanToStatus(pilihan),
       maybeDate: "",
       maybeNote: "",
-      questionList: [], // TODO: masih kosong, nunggu keputusan per-sesi vs global
+      questionList: [],
     };
 
     console.log("RSVP payload (draft, belum dikirim):", payload);
@@ -130,7 +123,6 @@ const Rsvp = ({ data, guestName, guestPhone, pin }: RsvpProps) => {
     } else {
       setModalType("rsvp_confirmed_tidak_hadir");
     }
-    // TODO: panggil submitRsvp() di sini setelah blocker status/per-sesi kelar
   };
 
   return (
@@ -156,7 +148,6 @@ const Rsvp = ({ data, guestName, guestPhone, pin }: RsvpProps) => {
               transition={{ duration: 3, ease: "easeOut", delay: 0.3 }}
               className="pt-[1.4vw] lg:pt-[18px] font-athelas font-bold italic text-[3.08vw] lg:text-[16px] text-[#51483F] tracking-[2%] break-words px-6 max-w-full lg:max-w-[350px] lg:px-0"
             >
-              {/* TODO: belum ada field API yang jelas buat salutation (Mr./Mrs./Ms.), dibiarin static dulu */}
               Mr./Mrs./Ms.
             </motion.p>
             <motion.p
@@ -297,9 +288,7 @@ export default Rsvp;
 
 
 
-
-
-// SEBELUM DI DINAMISKAN
+// RSVP SEBELUM DI DINAMISKAN
 // "use client";
 
 // import { useState } from "react";

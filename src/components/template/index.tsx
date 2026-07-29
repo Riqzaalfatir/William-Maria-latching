@@ -60,8 +60,6 @@ export default function EventTemplate({ data }: TemplateProps) {
   const { progress } = usePreloader();
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Baca PIN: dari searchParams (fallback link lama ?pin=xxx) ATAU dari localStorage
-  // (yang udah kesimpen duluan oleh app/[id]/[pin]/page.tsx)
   useEffect(() => {
     if (!dataEvent?.url) return;
 
@@ -128,8 +126,8 @@ export default function EventTemplate({ data }: TemplateProps) {
     <>
       <main className="block">
         <div className="overflow-x-hidden">
-          <Header data={dataEvent} />
-          <Hero data={{ ...dataEvent, logoImage: dataContent?.logoImage }} />
+          <Header/>
+          <Hero data={{ ...dataEvent, logoImage: dataContent?.logoImage, bannerImage: dataContent?.bannerImage }} />
           <Profile
             data={{
               ...dataEvent,
@@ -137,17 +135,17 @@ export default function EventTemplate({ data }: TemplateProps) {
               address: receptionSession?.addressName,
             }}
           />
-          <Pengantin data={dataEvent} />
+          <Pengantin />
           <EventOrder data={{ dataSession, logoImage: dataContent?.logoImage }} />
-          <Gallery data={dataEvent} />
-          <Quote data={dataEvent} />
+          <Gallery data={{ dataContent }} />
+          <Quote  />
           <Rsvp
             data={dataEvent}
             guestName={dataGuest?.name}
             guestPhone={dataGuest?.phone}
             pin={pin}
           />
-          <Faq data={dataEvent} />
+          <Faq />
         </div>
 
         <div className="relative w-full">
@@ -160,7 +158,15 @@ export default function EventTemplate({ data }: TemplateProps) {
             />
           </div>
           <Wishes eventId={dataEvent?.id} data={dataEvent} />
-          <Thankyou data={dataEvent} />
+          {/* FIX: sebelumnya cuma `data={dataEvent}`, footerNote/footerImage
+              gak pernah ke-kirim karena field itu ada di dataContent, bukan dataEvent */}
+          <Thankyou
+            data={{
+              ...dataEvent,
+              footerNote: dataContent?.footerNote,
+              footerImage: dataContent?.footerImage,
+            }}
+          />
         </div>
       </main>
 

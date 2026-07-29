@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { fadeUp } from "@/lib/animation";
 import { useListPMG, type PersonalGuestMessage } from "@/hooks/api/useListPMG";
 import { usePMG } from "@/hooks/api/usePMG";
-import { dummyPesan } from "@/components/data/wishes"; // ⬅️ tambahan baru
+import { dummyPesan } from "@/components/data/wishes"; 
 
 type ModalType = string | null;
 
@@ -19,14 +19,11 @@ type WishesProps = {
   };
 };
 
-// Convert dummyPesan { id, nama, pesan } jadi bentuk yang sama kayak PersonalGuestMessage { id, name, message }
 const dummyAsPersonalGuestMessage: PersonalGuestMessage[] = dummyPesan.map((item) => ({
   id: String(item.id),
   name: item.nama,
   message: item.pesan,
 } as PersonalGuestMessage));
-// TODO: kalau type PersonalGuestMessage punya field wajib lain selain id/name/message,
-// tambahin di sini juga (misal createdAt dll), sesuaikan sama definisi asli di useListPMG.ts
 
 const Wishes = ({ eventId, data }: WishesProps) => {
   const [nama, setNama] = useState<string>("");
@@ -61,7 +58,7 @@ const Wishes = ({ eventId, data }: WishesProps) => {
       setPesan("");
       getListPMG(eventId); // refresh list biar ucapan baru langsung muncul
     } else {
-      setModalType("submit_failed"); // TODO: pastiin NotifModal punya varian ini, atau ganti key-nya
+      setModalType("submit_failed"); 
     }
   };
 

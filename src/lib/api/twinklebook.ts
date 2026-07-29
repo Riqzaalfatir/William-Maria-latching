@@ -101,10 +101,6 @@ export function submitPersonalGuestMessage<T = any>(payload: {
 }
 
 // --- InputRSVP ---
-// ✅ Endpoint ini SUDAH DIKONFIRMASI ada di Postman collection terbaru dari tim.
-// ⚠️ TAPI field `status` (angka) di payload BELUM JELAS mapping-nya ke Attend/Maybe/Not-Attend.
-// Cross-check dulu ke tim atau ke pola `rsvpStatus` di response GetSmartRSVPData
-// sebelum dipakai buat submit beneran.
 export function submitEventRsvp<T = any>(payload: {
   eventId: string;
   url: string;

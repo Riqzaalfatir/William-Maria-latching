@@ -6,6 +6,11 @@ import { fadeUp } from "@/lib/animation";
 type ThankyouProps = { data?: any };
 
 const Thankyou = ({ data }: ThankyouProps) => {
+  const footerNote: string =
+    data?.footerNote && data.footerNote.trim().length > 0
+      ? data.footerNote
+      : "Having you with us on our special day would\nmake our celebration even more meaningful.";
+
   return (
     <section className="">
       <div className="pt-[656px] pb-[31px] lg:pt-[673px] lg:pb-[50px]">
@@ -28,8 +33,12 @@ const Thankyou = ({ data }: ThankyouProps) => {
             transition={{ duration: 3, ease: "easeOut", delay: 0.3 }}
             className="pt-[16px] lg:pt-[23px] font-athelas italic text-[3.08vw] lg:text-[17px] text-white leading-[4.10vw] lg:leading-[22px] tracking-wide"
           >
-            Having you with us on our special day would <br />
-            make our celebration even more meaningful.
+            {footerNote.split("\n").map((line, i, arr) => (
+              <React.Fragment key={i}>
+                {line}
+                {i < arr.length - 1 && <br />}
+              </React.Fragment>
+            ))}
           </motion.p>
           <motion.div
             variants={fadeUp}

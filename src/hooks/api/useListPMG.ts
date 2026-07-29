@@ -6,8 +6,6 @@ import { getAllPersonalGuestMessages } from "@/lib/api/twinklebook";
 
 type Status = "idle" | "loading" | "success" | "error";
 
-// TODO: sesuaikan field ini begitu response asli GetAllPersonalGuestMessages udah dicek
-// src/hooks/api/useListPMG.ts — update bagian type-nya aja
 
 export type PersonalGuestMessage = {
   id: string;

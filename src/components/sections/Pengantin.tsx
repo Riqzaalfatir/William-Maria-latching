@@ -11,7 +11,7 @@ const Pengantin = ({ data }: PengantinProps) => {
       <ResponsivePicture
         mobileSrc="/images/pengantin/Sl-Wima.webp"
         desktopSrc="/images/pengantin/SL-WIMAD.webp"
-        alt={data?.groomFullName ?? data?.brideFullName ?? "Couple wedding photo"}
+        alt="Pengantin"
         className="w-full h-full object-cover pointer-events-none"
         unoptimized
       />

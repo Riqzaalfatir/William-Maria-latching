@@ -18,7 +18,7 @@ const Faq = ({ data }: FaqProps) => {
     const parts = text.split(/(\n\n|\n)/);
     return parts.map((part, i) => {
       if (part === "\n\n") {
-        return <br key={i} />; // hard break — selalu patah
+        return <br key={i} />; 
       }
       if (part === "\n") {
         return (
@@ -26,7 +26,7 @@ const Faq = ({ data }: FaqProps) => {
             <br className="lg:hidden" />
             <span className="hidden lg:inline"> </span>
           </React.Fragment>
-        ); // soft break — patah di mobile, jadi spasi di desktop
+        ); 
       }
       return <React.Fragment key={i}>{part}</React.Fragment>;
     });

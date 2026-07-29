@@ -37,7 +37,7 @@ export const scaleIn: Variants = {
 }
 
 export const popIn: Variants = {
-  hidden: { opacity: 0, scale: 0.50 },
+  hidden: { opacity: 0, scale: 0.85 },
   show: {
     opacity: 1,
     scale: 1,
