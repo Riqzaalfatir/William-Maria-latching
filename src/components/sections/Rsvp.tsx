@@ -78,13 +78,13 @@ function formatWaHref(waUrl?: string): string {
   return waUrl.replace(/\D/g, "");
 }
 
-const Rsvp = ({ data, guestName, guestPhone, pin }: RsvpProps) => {
-  const [pilihan, setPilihan] = useState<Pilihan>(null);
+const Rsvp = ({ data, paramUrl, guestName, guestPhone, pin }: RsvpProps) => {
+    const [pilihan, setPilihan] = useState<Pilihan>(null);
   const [modalType, setModalType] = useState<ModalType>(null);
 
-  const deadlineText = formatDeadlineDate(data?.closeRSVPDate);
-  const waHref = formatWaHref(data?.invitationWAUrl);
-  const waNumberForModal = data?.invitationWAUrl ?? "6281234567890";
+const deadlineText = formatDeadlineDate(data?.dataEvent?.closeRSVPDate);
+const waHref = formatWaHref(data?.dataEvent?.invitationWAUrl);
+const waNumberForModal = data?.dataEvent?.invitationWAUrl ?? "6281234567890";
 
   const handleConfirm = (): void => {
     if (!pilihan) {
@@ -96,8 +96,8 @@ const Rsvp = ({ data, guestName, guestPhone, pin }: RsvpProps) => {
 
   const submitRsvp = async (): Promise<void> => {
     const payload: RsvpSubmitPayload = {
-      eventId: data?.id ?? "",
-      url: data?.url ?? "",
+    eventId: data?.dataEvent?.id ?? "",
+url: data?.dataEvent?.url ?? "",
       pin: pin ?? "",
       name: guestName ?? "",
       phone: guestPhone ?? "",
