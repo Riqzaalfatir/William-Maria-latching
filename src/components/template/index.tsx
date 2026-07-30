@@ -129,7 +129,7 @@ export default function EventTemplate({ data: rawData }: TemplateProps) {
           <Profile data={data} />
           <Pengantin />
           <EventOrder data={data} />
-          <Gallery data={data} />
+          <Gallery />
           <Quote />
           <Rsvp data={data} paramUrl={paramUrl} />
           <Faq />
