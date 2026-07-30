@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { useCurrentGuest } from "@/hooks/api/useCurrentGuest";
 import { useEventOpenInvitation } from "@/hooks/api/useEventOpenInvitation";
-import { useSmartRsvpQuestion } from "@/hooks/api/useSmartRsvpQuestion";
 import { useEventSessionByPin } from "@/hooks/api/useEventSessionByPin";
 import LoadingScreen from "@/ui/LoadingScreen";
 import { usePreloader } from "@/hooks/usePreloader";
@@ -37,17 +36,14 @@ export default function EventTemplate({ data: rawData }: TemplateProps) {
   const dataEvent = rawData?.dataEvent;
   const dataContent = rawData?.dataContent;
 
+  const paramUrl = searchParams.get("to") ?? "";
+
   const {
     getEventGuestByPin,
     eventGuestByPin,
     status: guestStatus,
   } = useCurrentGuest();
   const { submitOpenInvitation } = useEventOpenInvitation();
-  const {
-    getSmartRsvpQuestionByPin,
-    smartRsvpQuestionByPin,
-    status: rsvpDataStatus,
-  } = useSmartRsvpQuestion();
   const {
     getEventSessionByPin,
     eventSessionByPin,
@@ -60,42 +56,43 @@ export default function EventTemplate({ data: rawData }: TemplateProps) {
   const { progress } = usePreloader();
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  useEffect(() => {
-    if (!dataEvent?.url) return;
+ useEffect(() => {
+  if (!dataEvent?.url) return;
 
-    const pinFromUrl = searchParams.get("pin");
-    const storageKey = `${dataEvent.url}-pin`;
+  const pinFromUrl = searchParams.get("pin");
+  const storageKey = `${dataEvent.url}-pin`;
 
-    let resolvedPin = pinFromUrl;
-    if (resolvedPin) {
-      localStorage.setItem(storageKey, resolvedPin);
-    } else {
-      resolvedPin = localStorage.getItem(storageKey);
-    }
+  let resolvedPin = pinFromUrl;
+  if (resolvedPin) {
+    localStorage.setItem(storageKey, resolvedPin);
+  } else {
+    resolvedPin = localStorage.getItem(storageKey);
+  }
 
-    if (resolvedPin) {
-      setPin(resolvedPin);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataEvent?.url, searchParams]);
+  if (resolvedPin) {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- sinkronisasi dengan localStorage (sumber eksternal), bukan derived state biasa
+    setPin(resolvedPin);
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [dataEvent?.url, searchParams]);
 
   useEffect(() => {
     if (dataEvent?.id && dataEvent?.url && pin) {
       getEventGuestByPin(dataEvent.url, pin);
-      getSmartRsvpQuestionByPin(dataEvent.url, pin);
       getEventSessionByPin(pin, dataEvent.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataEvent?.id, dataEvent?.url, pin]);
 
   const dataGuest = eventGuestByPin as any;
-  const dataRsvp = smartRsvpQuestionByPin as any;
   const dataSession = eventSessionByPin as any;
 
   const data = {
-    ...dataContent,
-    ...dataEvent,
+    dataEvent,
+    dataContent,
     dataSession,
+    url: dataEvent?.url,
+    date: dataEvent?.date,
   };
 
   useEffect(() => {
@@ -128,18 +125,13 @@ export default function EventTemplate({ data: rawData }: TemplateProps) {
       <main className="block">
         <div className="overflow-x-hidden">
           <Header />
-          <Hero data={data} />
+          <Hero data={data} paramUrl={paramUrl} onOpenInvite={handleInvitationOpen} />
           <Profile data={data} />
           <Pengantin />
           <EventOrder data={data} />
-          <Gallery />
+          <Gallery data={data} />
           <Quote />
-          <Rsvp
-            data={data}
-            guestName={dataGuest?.name}
-            guestPhone={dataGuest?.phone}
-            pin={pin}
-          />
+          <Rsvp data={data} paramUrl={paramUrl} />
           <Faq />
         </div>
 

@@ -29,7 +29,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${notoSans.variable} ${geistSans.variable} ${geistMono.variable} ${athelas.variable} ${averne.variable} ${duende.variable} ${urw.variable}`}>
+    <html
+      lang="en"
+      className={`${notoSans.variable} ${geistSans.variable} ${geistMono.variable} ${athelas.variable} ${averne.variable} ${duende.variable} ${urw.variable}`}
+    >
       <body>{children}</body>
     </html>
   );

@@ -11,7 +11,11 @@ export default function EventPage() {
   const { id } = useParams<{ id: string }>();
 
   const { getEventByUrl, eventByUrl, status, error } = useEventUrl();
-  const { getEventContent, eventContentByEventId, status: contentStatus } = useEventContent();
+  const {
+    getEventContent,
+    eventContentByEventId,
+    status: contentStatus,
+  } = useEventContent();
 
   useEffect(() => {
     if (id) {
@@ -30,11 +34,13 @@ export default function EventPage() {
 
   const dataContent = eventContentByEventId as any;
 
- // app/[id]/page.tsx
-
-if (status === "loading" || status === "idle" || contentStatus === "loading") {
-  return <div className="fixed inset-0 bg-[#F9FBFA]" />;
-}
+  if (
+    status === "loading" ||
+    status === "idle" ||
+    contentStatus === "loading"
+  ) {
+    return <div className="fixed inset-0 bg-[#F9FBFA]" />;
+  }
 
   if (status === "error") {
     return (
@@ -49,5 +55,7 @@ if (status === "loading" || status === "idle" || contentStatus === "loading") {
     dataEvent: dataEvent,
   };
 
-  return <EventTemplate data={dataFix} isPreview={false} dataValidation={null} />;
+  return (
+    <EventTemplate data={dataFix} isPreview={false} dataValidation={null} />
+  );
 }

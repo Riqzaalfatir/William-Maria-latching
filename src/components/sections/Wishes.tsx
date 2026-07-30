@@ -8,29 +8,35 @@ import { motion } from "framer-motion";
 import { fadeUp } from "@/lib/animation";
 import { useListPMG, type PersonalGuestMessage } from "@/hooks/api/useListPMG";
 import { usePMG } from "@/hooks/api/usePMG";
-import { dummyPesan } from "@/components/data/wishes"; 
+import { dummyPesan } from "@/components/data/wishes";
 
 type ModalType = string | null;
 
 type WishesProps = {
   eventId?: string;
   data?: {
-    invitationWAUrl?: string;   
+    dataEvent?: {
+      invitationWAUrl?: string;
+    };
   };
 };
 
-const dummyAsPersonalGuestMessage: PersonalGuestMessage[] = dummyPesan.map((item) => ({
-  id: String(item.id),
-  name: item.nama,
-  message: item.pesan,
-} as PersonalGuestMessage));
+const dummyAsPersonalGuestMessage: PersonalGuestMessage[] = dummyPesan.map(
+  (item) =>
+    ({
+      id: String(item.id),
+      name: item.nama,
+      message: item.pesan,
+    }) as PersonalGuestMessage,
+);
 
 const Wishes = ({ eventId, data }: WishesProps) => {
   const [nama, setNama] = useState<string>("");
   const [pesan, setPesan] = useState<string>("");
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [showAll, setShowAll] = useState<boolean>(false);
-  const [selectedMessage, setSelectedMessage] = useState<PersonalGuestMessage | null>(null);
+  const [selectedMessage, setSelectedMessage] =
+    useState<PersonalGuestMessage | null>(null);
   const [modalType, setModalType] = useState<ModalType>(null);
 
   const { getListPMG, listPMG, statusListPMG } = useListPMG();
@@ -57,7 +63,7 @@ const Wishes = ({ eventId, data }: WishesProps) => {
       setPesan("");
       getListPMG(eventId);
     } else {
-      setModalType("submit_failed"); 
+      setModalType("submit_failed");
     }
   };
 
@@ -149,7 +155,9 @@ const Wishes = ({ eventId, data }: WishesProps) => {
               }`}
             >
               {statusListPMG === "loading" && (
-                <p className="text-white text-center py-4 font-athelas">Memuat ucapan...</p>
+                <p className="text-white text-center py-4 font-athelas">
+                  Memuat ucapan...
+                </p>
               )}
 
               {/* KOTAK LIST PESAN  */}
@@ -191,32 +199,25 @@ const Wishes = ({ eventId, data }: WishesProps) => {
                         .slice(0, 2);
 
                       return (
-                        // KETIKA DI VIEW ALL MESSAGE MUNCUL CARD CARD PESAN
                         <div
                           key={item.id}
                           onClick={() => setSelectedMessage(item)}
                           className="group relative overflow-hidden rounded-[15px] border border-[#51483F]/15 bg-[#F9FBFA] flex flex-col cursor-pointer hover:shadow-lg transition-all duration-300 hover:border-[#51483F]/30 active:scale-95"
                         >
-                          {/* Decorative top accent */}
                           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#51483F]/60 via-[#51483F]/30 to-transparent" />
 
-                          {/* Content area */}
                           <div className="p-[2vw] lg:p-[20px] flex-1 flex flex-col justify-between">
-                            {/* Quotation mark */}
                             <p className="text-[21vw] lg:text-[56px] font-duende text-[#51483F]/20 leading-none group-hover:text-[#51483F]/30 transition-colors -ml-[10px]">
                               "
                             </p>
 
-                            {/* Pesan */}
                             <p className="font-athelas italic text-[3.08vw] lg:text-[15px] text-[#51483F]/85 text-left line-clamp-4 leading-[4.36vw] lg:leading-[22px] -mt-[30px] lg:-mt-[20px] mb-4">
                               {item.message}
                             </p>
 
-                            {/* Accent line */}
                             <div className="w-8 h-0.5 bg-[#51483F]/20 rounded-full" />
                           </div>
 
-                          {/* Avatar + NamA footer */}
                           <div className="bg-[#51483F] px-[3.08vw] lg:px-[16px] py-[2.56vw] lg:py-[14px] flex items-center gap-[2.05vw] lg:gap-[12px]">
                             <div className="w-[6.15vw] h-[6.15vw] lg:w-[36px] lg:h-[36px] rounded-full bg-white/15 flex items-center justify-center flex-shrink-0 border border-white/20">
                               <p className="text-white text-[2.56vw] lg:text-[13px] font-athelas font-bold">
@@ -229,7 +230,6 @@ const Wishes = ({ eventId, data }: WishesProps) => {
                             </p>
                           </div>
 
-                          {/* Hover effect overlay */}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/0 to-transparent opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none" />
                         </div>
                       );
@@ -242,14 +242,15 @@ const Wishes = ({ eventId, data }: WishesProps) => {
             <WishesCard
               data={
                 selectedMessage
-                  ? { id: selectedMessage.id, nama: selectedMessage.name, pesan: selectedMessage.message }
+                  ? {
+                      id: selectedMessage.id,
+                      nama: selectedMessage.name,
+                      pesan: selectedMessage.message,
+                    }
                   : null
               }
               onClose={() => setSelectedMessage(null)}
             />
-            {/* TODO: cek prop `data` yang diharapkan WishesCard.tsx — kalau propnya
-                udah pake nama field { id, name, message } juga, hapus mapping di atas
-                dan langsung pass `selectedMessage` aja */}
 
             <motion.div
               variants={fadeUp}
@@ -275,7 +276,6 @@ const Wishes = ({ eventId, data }: WishesProps) => {
           </div>
         </div>
         {showPopup && (
-          // CARD MUNCUL KETIKA USER TELAH MENGIRIM NAMA DAN PESAN
           <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/40 backdrop-blur-[4px] px-[24px]">
             <div className="relative overflow-hidden rounded-[28px] border border-[#51483F]/20 bg-[#F9FBFA] shadow-lg w-full max-w-[84.62vw] lg:max-w-[420px]">
               <div className="absolute top-0 left-0 w-full h-[1.54vw] lg:h-[8px] bg-[#51483F]" />
@@ -316,19 +316,16 @@ const Wishes = ({ eventId, data }: WishesProps) => {
         )}
       </section>
 
-  {modalType && (
-  <NotifModal
-    type={modalType}
-    onClose={() => setModalType(null)}
-    onConfirm={() => setModalType(null)}
-    waNumber={data?.invitationWAUrl ?? "6281234567890"}   
-  />
-)}
+      {modalType && (
+        <NotifModal
+          type={modalType}
+          onClose={() => setModalType(null)}
+          onConfirm={() => setModalType(null)}
+          waNumber={data?.dataEvent?.invitationWAUrl ?? "6281234567890"}
+        />
+      )}
     </>
   );
 };
 
 export default Wishes;
-
-
-

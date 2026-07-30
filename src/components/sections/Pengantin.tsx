@@ -5,9 +5,7 @@ type PengantinProps = { data?: any };
 
 const Pengantin = ({ data }: PengantinProps) => {
   return (
-    <section
-      className="relative w-full bgb h-[360px] lg:h-[942px]"
-    >
+    <section className="relative w-full bgb h-[360px] lg:h-[942px]">
       <ResponsivePicture
         mobileSrc="/images/pengantin/Sl-Wima.webp"
         desktopSrc="/images/pengantin/SL-WIMAD.webp"

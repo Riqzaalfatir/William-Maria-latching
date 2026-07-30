@@ -10,7 +10,7 @@ type LinkMenu = {
 };
 
 type HeaderProps = {
-  data?: any; 
+  data?: any;
 };
 
 const Header = ({ data }: HeaderProps) => {

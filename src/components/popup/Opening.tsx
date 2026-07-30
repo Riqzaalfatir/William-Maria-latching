@@ -57,9 +57,9 @@ const Opening = ({
     }, 900);
   };
 
-  const eventDate = formatEventDate(data?.date);
-  const groomFullName = data?.groomFullName ?? "Nama";
-  const brideFullName = data?.brideFullName ?? "Partner";
+  const eventDate = formatEventDate(data?.dataEvent?.date);
+  const groomFullName = data?.dataEvent?.groomFullName ?? "Nama";
+  const brideFullName = data?.dataEvent?.brideFullName ?? "Partner";
 
   return (
     <AnimatePresence mode="wait">
@@ -93,9 +93,9 @@ const Opening = ({
               <p className="text-[12px] md:text-[18px] text-white font-athelas italic tracking-[5%]">
                 we invite you to celebrate
               </p>
-              {data?.logoImage ? (
+              {data?.dataContent?.logoImage ? (
                 <img
-                  src={data.logoImage}
+                  src={data.dataContent.logoImage}
                   alt="Wedding Logo"
                   className="w-[181px] h-[76px] md:w-[281px] md:h-[118px] pt-[4px] md:mt-[9px] object-contain"
                 />

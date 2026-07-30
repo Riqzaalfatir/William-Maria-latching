@@ -7,18 +7,24 @@ import ResponsivePicture from "@/hooks/ResponsivePicture";
 
 type HeroProps = {
   data?: {
-    groomFullName?: string;
-    brideFullName?: string;
-    bannerImage?: string;
-    logoImage?: string;
+    dataEvent?: {
+      groomFullName?: string;
+      brideFullName?: string;
+    };
+    dataContent?: {
+      bannerImage?: string;
+      logoImage?: string;
+    };
   };
+  paramUrl?: string;
+  onOpenInvite?: () => void;
 };
 
-const Hero = ({ data }: HeroProps) => {
-  const groomFullName = data?.groomFullName ?? "Groom";      
-  const brideFullName = data?.brideFullName ?? "Bride";       
-  const bannerImage = data?.bannerImage;                      
-  const logoImage = data?.logoImage; 
+const Hero = ({ data, paramUrl, onOpenInvite }: HeroProps) => {
+  const groomFullName = data?.dataEvent?.groomFullName ?? "Groom";
+  const brideFullName = data?.dataEvent?.brideFullName ?? "Bride";
+  const bannerImage = data?.dataContent?.bannerImage;
+  const logoImage = data?.dataContent?.logoImage;
 
   return (
     <div id="hero">
@@ -43,9 +49,7 @@ const Hero = ({ data }: HeroProps) => {
             The Wedding of
           </motion.p>
 
-          <motion.div
-            className="absolute top-[25.9vw] left-1/2 -translate-x-1/2 w-[255px] h-auto z-30 lg:static lg:translate-x-0 lg:w-[411px] lg:mt-[20px]"
-          >
+          <motion.div className="absolute top-[25.9vw] left-1/2 -translate-x-1/2 w-[255px] h-auto z-30 lg:static lg:translate-x-0 lg:w-[411px] lg:mt-[20px]">
             <motion.div
               variants={popIn}
               initial="hidden"
@@ -78,4 +82,3 @@ const Hero = ({ data }: HeroProps) => {
 };
 
 export default Hero;
-

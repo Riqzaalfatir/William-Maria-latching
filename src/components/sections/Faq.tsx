@@ -18,7 +18,7 @@ const Faq = ({ data }: FaqProps) => {
     const parts = text.split(/(\n\n|\n)/);
     return parts.map((part, i) => {
       if (part === "\n\n") {
-        return <br key={i} />; 
+        return <br key={i} />;
       }
       if (part === "\n") {
         return (
@@ -26,7 +26,7 @@ const Faq = ({ data }: FaqProps) => {
             <br className="lg:hidden" />
             <span className="hidden lg:inline"> </span>
           </React.Fragment>
-        ); 
+        );
       }
       return <React.Fragment key={i}>{part}</React.Fragment>;
     });
@@ -78,7 +78,6 @@ const Faq = ({ data }: FaqProps) => {
                           onClick={() => toggle(key)}
                           className="w-full flex justify-between items-center py-[2px] md:py-[13px] text-left text-[#51483F]"
                         >
-
                           {/* PERTANYAAN FAQ */}
                           <span className="text-[12px] md:text-[18px] md:text-[18px] text-[#707071] font-athelas  font-normal pr-4">
                             {item.pertanyaan}

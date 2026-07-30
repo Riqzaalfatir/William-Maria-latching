@@ -10,13 +10,34 @@ import { motion, PanInfo } from "framer-motion";
 import ResponsivePicture from "@/hooks/ResponsivePicture";
 
 const galleryImages = [
-  { mobile: "/images/gallery/Pengantin.webp", desktop: "/images/gallery/PengantinD.webp" },
-  { mobile: "/images/gallery/Pengantin2.webp", desktop: "/images/gallery/PengantinD2.webp" },
-  { mobile: "/images/gallery/Pengantin3.webp", desktop: "/images/gallery/PengantinD3.webp" },
-  { mobile: "/images/gallery/Pengantin4.webp", desktop: "/images/gallery/PengantinD4.webp" },
-  { mobile: "/images/gallery/Pengantin5.webp", desktop: "/images/gallery/PengantinD5.webp" },
-  { mobile: "/images/gallery/Pengantin6.webp", desktop: "/images/gallery/PengantinD.webp" },
-  { mobile: "/images/gallery/Pengantin7.webp", desktop: "/images/gallery/PengantinD2.webp" },
+  {
+    mobile: "/images/gallery/Pengantin.webp",
+    desktop: "/images/gallery/PengantinD.webp",
+  },
+  {
+    mobile: "/images/gallery/Pengantin2.webp",
+    desktop: "/images/gallery/PengantinD2.webp",
+  },
+  {
+    mobile: "/images/gallery/Pengantin3.webp",
+    desktop: "/images/gallery/PengantinD3.webp",
+  },
+  {
+    mobile: "/images/gallery/Pengantin4.webp",
+    desktop: "/images/gallery/PengantinD4.webp",
+  },
+  {
+    mobile: "/images/gallery/Pengantin5.webp",
+    desktop: "/images/gallery/PengantinD5.webp",
+  },
+  {
+    mobile: "/images/gallery/Pengantin6.webp",
+    desktop: "/images/gallery/PengantinD.webp",
+  },
+  {
+    mobile: "/images/gallery/Pengantin7.webp",
+    desktop: "/images/gallery/PengantinD2.webp",
+  },
 ];
 
 const AUTO_SLIDE_INTERVAL = 4000; // ms

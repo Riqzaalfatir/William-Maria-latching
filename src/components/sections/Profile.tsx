@@ -13,27 +13,29 @@ interface SessionItem {
 
 interface ProfileProps {
   data?: {
-    groomFullName?: string;
-    brideFullName?: string;
-    groomParent?: string;
-    brideParent?: string;
+    dataEvent?: {
+      groomFullName?: string;
+      brideFullName?: string;
+      groomParent?: string;
+      brideParent?: string;
+    };
     date?: string;
     dataSession?: SessionItem[];
   };
 }
 
 const Profile = ({ data }: ProfileProps) => {
-  const groomFullName = data?.groomFullName ?? "CHRISTIAN TANUDJAJA";
-  const brideFullName = data?.brideFullName ?? "LAWRENA";
+  const groomFullName = data?.dataEvent?.groomFullName ?? "CHRISTIAN TANUDJAJA";
+  const brideFullName = data?.dataEvent?.brideFullName ?? "LAWRENA";
 
   const [groomFather, groomMother] = (
-    data?.groomParent ?? "MR. TOMI TANUDJAJA (†) & MRS. KO KOEY FAH"
+    data?.dataEvent?.groomParent ?? "MR. TOMI TANUDJAJA (†) & MRS. KO KOEY FAH"
   )
     .split("&")
     .map((s) => s.trim());
 
   const [brideFather, brideMother] = (
-    data?.brideParent ?? "MR. EDIH SUTISNA & MRS. INA MARINA"
+    data?.dataEvent?.brideParent ?? "MR. EDIH SUTISNA & MRS. INA MARINA"
   )
     .split("&")
     .map((s) => s.trim());

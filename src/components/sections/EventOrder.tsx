@@ -16,7 +16,9 @@ interface SessionItem {
 
 interface EventOrderProps {
   data?: {
-    logoImage?: string;
+    dataContent?: {
+      logoImage?: string;
+    };
     dataSession?: SessionItem[];
   };
 }
@@ -44,7 +46,7 @@ function buildMapsLink(latLong?: string): string {
 
 const EventOrder = ({ data }: EventOrderProps) => {
   const sessions = data?.dataSession ?? [];
-  const logoImage = data?.logoImage;
+  const logoImage = data?.dataContent?.logoImage;
 
   const ceremonySession =
     sessions.find((item) => item.name?.toLowerCase().includes("ceremony")) ??
@@ -60,10 +62,14 @@ const EventOrder = ({ data }: EventOrderProps) => {
   const receptionTime = formatSessionTime(receptionSession?.date);
 
   const ceremonyVenue =
-    ceremonySession?.address || ceremonySession?.addressName || "Putting Garden";
+    ceremonySession?.address ||
+    ceremonySession?.addressName ||
+    "Putting Garden";
 
   const receptionVenue =
-    receptionSession?.address || receptionSession?.addressName || "Intercontinental Hotel Bandung";
+    receptionSession?.address ||
+    receptionSession?.addressName ||
+    "Intercontinental Hotel Bandung";
 
   const receptionHall = "GRAND BALLROOM";
 

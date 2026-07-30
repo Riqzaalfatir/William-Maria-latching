@@ -138,7 +138,7 @@ const Quote = ({ data }: QuoteProps) => {
     }, 4000);
 
     return () => clearInterval(interval);
-  },  [index, slides.length]); 
+  }, [index, slides.length]);
 
   return (
     <section style={{ overflowAnchor: "none" }}>
@@ -190,8 +190,7 @@ const Quote = ({ data }: QuoteProps) => {
                 exit={{ x: direction >= 0 ? "-100%" : "100%" }}
                 transition={{ duration: 1.2, ease: [0.32, 0.72, 0, 1] }}
                 className="cursor-grab active:cursor-grabbing absolute w-full"
-                                style={{ touchAction: "pan-y" }}
-
+                style={{ touchAction: "pan-y" }}
               >
                 {slides[index]}
               </motion.div>
