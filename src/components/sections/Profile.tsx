@@ -5,25 +5,27 @@ import { fadeUp } from "@/lib/animation";
 import ResponsivePicture from "@/hooks/ResponsivePicture";
 import { formatWeekdayMonth } from "@/lib/formatDate";
 
+interface SessionItem {
+  address?: string;
+  addressName?: string;
+  name?: string;
+}
+
 interface ProfileProps {
   data?: {
     groomFullName?: string;
     brideFullName?: string;
-    groomParent?: string; // format: "Mr. X & Mrs. Y"
-    brideParent?: string; // format: "Mr. X & Mrs. Y"
-    date?: string; // ISO string
-
-    venue?: string;
-    address?: string;
+    groomParent?: string;
+    brideParent?: string;
+    date?: string;
+    dataSession?: SessionItem[];
   };
 }
 
 const Profile = ({ data }: ProfileProps) => {
-  // Fallback dummy buat preview mode kalau data belum ada
   const groomFullName = data?.groomFullName ?? "CHRISTIAN TANUDJAJA";
   const brideFullName = data?.brideFullName ?? "LAWRENA";
 
-  // groomParent/brideParent formatnya "Mr. X & Mrs. Y" -> pecah jadi 2 baris
   const [groomFather, groomMother] = (
     data?.groomParent ?? "MR. TOMI TANUDJAJA (†) & MRS. KO KOEY FAH"
   )
@@ -36,12 +38,13 @@ const Profile = ({ data }: ProfileProps) => {
     .split("&")
     .map((s) => s.trim());
 
-  // const formattedDate = data?.date
-  //   ? formatEventDate(data.date)
-  //   : "SATURDAY, 19 SEPTEMBER 2026";
+  const receptionSession =
+    data?.dataSession?.find((s) => s.name === "Cocktail & Reception") ??
+    data?.dataSession?.[0];
 
-  const venue = data?.venue ?? "INTERCONTINENTAL HOTEL BANDUNG";
-  const address = data?.address ?? "Jl. Resor Dago Pakar Raya 2B, Bandung";
+  const venue = receptionSession?.address ?? "INTERCONTINENTAL HOTEL BANDUNG";
+  const address =
+    receptionSession?.addressName ?? "Jl. Resor Dago Pakar Raya 2B, Bandung";
 
   return (
     <section id="profile">
@@ -144,7 +147,7 @@ const Profile = ({ data }: ProfileProps) => {
                   unoptimized
                 />
                 <h3
-                  className="-mt-[5.5vw] lg:pt-[58px] font-averne text-[4.62vw] lg:text-[24px] text-[#50473F] tracking-[3%] uppercase"
+                  className="-mt-[5.5vw] lg:-mt-[22px] font-averne text-[4.62vw] lg:text-[24px] text-[#50473F] tracking-[3%] uppercase"
                   style={{ WebkitTextStroke: "0.3px #51483F" }}
                 >
                   {brideFullName}
@@ -190,7 +193,9 @@ const Profile = ({ data }: ProfileProps) => {
             >
               {venue}
               <br />
-              <span className="italic lg:text-[15.9px] normal-case">{address}</span>
+              <span className="italic lg:text-[15.9px] normal-case">
+                {address}
+              </span>
             </motion.p>
             <motion.p
               variants={fadeUp}

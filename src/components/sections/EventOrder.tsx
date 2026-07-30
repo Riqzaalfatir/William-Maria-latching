@@ -16,50 +16,45 @@ interface SessionItem {
 
 interface EventOrderProps {
   data?: {
+    logoImage?: string;
     dataSession?: SessionItem[];
-    logoImage?: string; 
   };
 }
 
-// Format ISO date -> { value: "9.00", meridiem: "AM" }
 function formatSessionTime(isoDate?: string): {
   value: string;
   meridiem: string;
 } {
   if (!isoDate) return { value: "9.00", meridiem: "AM" };
-
   const match = isoDate.match(/T(\d{2}):(\d{2})/);
   if (!match) return { value: "9.00", meridiem: "AM" };
-
   let hour = parseInt(match[1], 10);
   const minute = match[2];
   const meridiem = hour >= 12 ? "PM" : "AM";
-
   hour = hour % 12;
   if (hour === 0) hour = 12;
-
   return { value: `${hour}.${minute}`, meridiem };
 }
 
-// Bikin link Google Maps dari string latLong "-8.67,115.15"
 function buildMapsLink(latLong?: string): string {
-  if (!latLong) return "https://maps.app.goo.gl/itNvPF8tGYZR4Whq9"; 
+  if (!latLong) return "https://maps.app.goo.gl/itNvPF8tGYZR4Whq9";
   const [lat, lng] = latLong.split(",").map((s) => s.trim());
   return `https://www.google.com/maps?q=${lat},${lng}`;
 }
 
 const EventOrder = ({ data }: EventOrderProps) => {
   const sessions = data?.dataSession ?? [];
+  const logoImage = data?.logoImage;
 
   const ceremonySession =
     sessions.find((item) => item.name?.toLowerCase().includes("ceremony")) ??
     sessions[0];
 
   const receptionSession =
-  sessions.find((item) => item.name?.toLowerCase().includes("dinner")) ??
-  sessions.find((item) => item.name?.toLowerCase().includes("reception")) ??
-  sessions.find((item) => item.name?.toLowerCase().includes("cocktail")) ??
-  sessions[1];
+    sessions.find((item) => item.name?.toLowerCase().includes("dinner")) ??
+    sessions.find((item) => item.name?.toLowerCase().includes("reception")) ??
+    sessions.find((item) => item.name?.toLowerCase().includes("cocktail")) ??
+    sessions[1];
 
   const ceremonyTime = formatSessionTime(ceremonySession?.date);
   const receptionTime = formatSessionTime(receptionSession?.date);
@@ -85,10 +80,10 @@ const EventOrder = ({ data }: EventOrderProps) => {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 3, ease: "easeOut", delay: 0.2 }}
           >
-            {data?.logoImage ? (
+            {logoImage ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src={data.logoImage}
+                src={logoImage}
                 alt="Wedding Logo"
                 className="w-full h-auto object-contain"
               />

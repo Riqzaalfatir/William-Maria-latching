@@ -10,7 +10,7 @@ type LinkMenu = {
 };
 
 type HeaderProps = {
-  data?: any; // Header gak butuh personalisasi data, ini cuma biar TypeScript gak nolak prop dari page.tsx
+  data?: any; 
 };
 
 const Header = ({ data }: HeaderProps) => {

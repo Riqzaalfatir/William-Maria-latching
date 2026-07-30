@@ -11,7 +11,6 @@ import ResponsivePicture from "@/hooks/ResponsivePicture";
 
 type GalleryProps = { data?: any };
 
-// Fallback hardcode kalau data.dataContent.galleryImageData kosong/null/gagal
 const FALLBACK_IMAGES = [
   { mobile: "/images/gallery/Pengantin.webp", desktop: "/images/gallery/PengantinD.webp" },
   { mobile: "/images/gallery/Pengantin2.webp", desktop: "/images/gallery/PengantinD2.webp" },
@@ -46,8 +45,6 @@ function normalizeGalleryData(
 
   if (urls.length === 0) return null;
 
-  // API cuma nyediain 1 URL per foto (bukan versi mobile/desktop terpisah),
-  // jadi 1 URL dipakai buat dua-duanya, cropping tetap diatur CSS object-position
   return urls.map((url) => ({ mobile: url, desktop: url }));
 }
 
@@ -73,8 +70,7 @@ const Gallery = ({ data }: GalleryProps) => {
     return () => window.removeEventListener("resize", measure);
   }, []);
 
-  // Deteksi breakpoint desktop (samain sama breakpoint `lg:` Tailwind = 1024px)
-  // buat nentuin slide mana yang dipake di Lightbox
+  
   useEffect(() => {
     const mql = window.matchMedia("(min-width: 1024px)");
     setIsDesktop(mql.matches);
@@ -134,28 +130,37 @@ const Gallery = ({ data }: GalleryProps) => {
             ref={viewportRef}
             className="relative w-[87.18vw] lg:w-[1098px] overflow-hidden aspect-[340/700] lg:aspect-[1098/746]"
           >
-            <motion.div
-              className="flex h-full"
-              style={{ willChange: "transform", touchAction: "pan-y", cursor: "grab" }}
-              drag="x"
-              dragConstraints={{ left: -trackWidth * (total - 1), right: 0 }}
-              dragElastic={0.15}
-              onDragEnd={handleDragEnd}
-              animate={{ x: `-${current * 100}%` }}
-              transition={{ duration: 1.2, ease: [0.32, 0.72, 0, 1] }}
-            >
-              {galleryImages.map((img, i) => (
-                <div key={i} className="relative w-full h-full shrink-0">
-                  <ResponsivePicture
-                    mobileSrc={img.mobile}
-                    desktopSrc={img.desktop}
-                    alt={`Gallery ${i + 1}`}
-                    fill={true}
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-            </motion.div>
+          <motion.div
+  className="flex h-full"
+  style={{
+    width: `${total * 100}%`,        
+    willChange: "transform",
+    touchAction: "pan-y",
+    cursor: "grab",
+  }}
+  drag="x"
+  dragConstraints={{ left: -trackWidth * (total - 1), right: 0 }}
+  dragElastic={0.15}
+  onDragEnd={handleDragEnd}
+  animate={{ x: `-${current * (100 / total)}%` }}   
+  transition={{ duration: 1.2, ease: [0.32, 0.72, 0, 1] }}
+>
+  {galleryImages.map((img, i) => (
+    <div
+      key={i}
+      className="relative h-full shrink-0"
+      style={{ width: `${100 / total}%` }}  
+    >
+      <ResponsivePicture
+        mobileSrc={img.mobile}
+        desktopSrc={img.desktop}
+        alt={`Gallery ${i + 1}`}
+        fill={true}
+        className="object-cover"
+      />
+    </div>
+  ))}
+</motion.div>
           </div>
         </div>
       </section>

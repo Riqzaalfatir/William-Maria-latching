@@ -80,22 +80,25 @@ export default function EventTemplate({ data }: TemplateProps) {
   }, [dataEvent?.url, searchParams]);
 
   useEffect(() => {
-    if (dataEvent?.id && pin) {
-      getEventGuestByPin(dataEvent.id, pin);
-      getSmartRsvpQuestionByPin(dataEvent.id, pin);
+    if (dataEvent?.id && dataEvent?.url && pin) {
+      getEventGuestByPin(dataEvent.url, pin);
+      getSmartRsvpQuestionByPin(dataEvent.url, pin);
       getEventSessionByPin(pin, dataEvent.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataEvent?.id, pin]);
+  }, [dataEvent?.id, dataEvent?.url, pin]);
 
   const dataGuest = eventGuestByPin as any;
   const dataRsvp = smartRsvpQuestionByPin as any;
   const dataSession = eventSessionByPin as any;
 
-  const receptionSession =
-    dataSession?.find?.(
-      (session: any) => session.name === "Cocktail & Reception"
-    ) ?? dataSession?.[0];
+  // ⬇️ INI TAMBAHAN PENTING — gabung semuanya jadi 1 object RATA (flat),
+  // ini yang dioper ke semua komponen, BUKAN `data` mentah dari props
+  const mergedData = {
+    ...dataContent,
+    ...dataEvent,
+    dataSession,
+  };
 
   useEffect(() => {
     if (!start) {
@@ -127,20 +130,14 @@ export default function EventTemplate({ data }: TemplateProps) {
       <main className="block">
         <div className="overflow-x-hidden">
           <Header/>
-          <Hero data={{ ...dataEvent, logoImage: dataContent?.logoImage, bannerImage: dataContent?.bannerImage }} />
-          <Profile
-            data={{
-              ...dataEvent,
-              venue: receptionSession?.address,
-              address: receptionSession?.addressName,
-            }}
-          />
+          <Hero data={mergedData} />
+          <Profile data={mergedData} />
           <Pengantin />
-          <EventOrder data={{ dataSession, logoImage: dataContent?.logoImage }} />
-          <Gallery data={{ dataContent }} />
-          <Quote  />
+          <EventOrder data={mergedData} />
+          <Gallery data={mergedData} />
+          <Quote />
           <Rsvp
-            data={dataEvent}
+            data={mergedData}
             guestName={dataGuest?.name}
             guestPhone={dataGuest?.phone}
             pin={pin}
@@ -157,16 +154,8 @@ export default function EventTemplate({ data }: TemplateProps) {
               className="w-full h-full object-cover"
             />
           </div>
-          <Wishes eventId={dataEvent?.id} data={dataEvent} />
-          {/* FIX: sebelumnya cuma `data={dataEvent}`, footerNote/footerImage
-              gak pernah ke-kirim karena field itu ada di dataContent, bukan dataEvent */}
-          <Thankyou
-            data={{
-              ...dataEvent,
-              footerNote: dataContent?.footerNote,
-              footerImage: dataContent?.footerImage,
-            }}
-          />
+          <Wishes eventId={dataEvent?.id} data={mergedData} />
+          <Thankyou data={mergedData} />
         </div>
       </main>
 
@@ -174,7 +163,7 @@ export default function EventTemplate({ data }: TemplateProps) {
         <Opening
           setStart={setStart}
           namaTamu={dataGuest?.name ?? "Sela"}
-          data={{ ...dataEvent, logoImage: dataContent?.logoImage }}
+          data={mergedData}
           onOpen={handleInvitationOpen}
         />
       )}

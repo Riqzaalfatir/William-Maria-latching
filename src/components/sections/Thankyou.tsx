@@ -3,12 +3,19 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { fadeUp } from "@/lib/animation";
 
-type ThankyouProps = { data?: any };
+type ThankyouProps = {
+  data?: {
+    dataContent?: {
+      footerNote?: string;
+      footerImage?: string;
+    };
+  };
+};
 
 const Thankyou = ({ data }: ThankyouProps) => {
   const footerNote: string =
-    data?.footerNote && data.footerNote.trim().length > 0
-      ? data.footerNote
+    data?.dataContent?.footerNote && data.dataContent.footerNote.trim().length > 0
+      ? data.dataContent.footerNote
       : "Having you with us on our special day would\nmake our celebration even more meaningful.";
 
   return (
@@ -80,3 +87,5 @@ const Thankyou = ({ data }: ThankyouProps) => {
 };
 
 export default Thankyou;
+
+

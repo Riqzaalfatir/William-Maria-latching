@@ -6,24 +6,35 @@ import { popIn } from "@/lib/animation";
 import ResponsivePicture from "@/hooks/ResponsivePicture";
 
 type HeroProps = {
-  data?: any;
+  data?: {
+    dataEvent?: {
+      groomFullName?: string;
+      brideFullName?: string;
+    };
+    dataContent?: {
+      bannerImage?: string;
+      logoImage?: string;
+    };
+  };
 };
 
 const Hero = ({ data }: HeroProps) => {
-  const groomFullName = data?.groomFullName ?? "Groom";
-  const brideFullName = data?.brideFullName ?? "Bride";
+  const groomFullName = data?.dataEvent?.groomFullName ?? "Groom";
+  const brideFullName = data?.dataEvent?.brideFullName ?? "Bride";
+  const bannerImage = data?.dataContent?.bannerImage;
+  const logoImage = data?.dataContent?.logoImage;
 
   return (
     <div id="hero">
       <div className="relative w-full overflow-hidden [aspect-ratio:390/844] lg:h-screen lg:aspect-[1512/945]">
         <ResponsivePicture
-  mobileSrc={data?.bannerImage || "/images/hero/Pengantin-Wm3.webp"}
-  desktopSrc={data?.bannerImage || "/images/hero/PengantinD.webp"}
-  alt={`${groomFullName} & ${brideFullName}`}
-  objectPositionMobile="center"
-  objectPositionDesktop="top"
-  priority
-/>
+          mobileSrc={bannerImage || "/images/hero/Pengantin-Wm3.webp"}
+          desktopSrc={bannerImage || "/images/hero/PengantinD.webp"}
+          alt={`${groomFullName} & ${brideFullName}`}
+          objectPositionMobile="center"
+          objectPositionDesktop="top"
+          priority
+        />
 
         <div className="absolute inset-0 z-10 flex flex-col items-center text-center pt-[20.77vw] lg:pt-0 lg:justify-center">
           <motion.p
@@ -45,10 +56,10 @@ const Hero = ({ data }: HeroProps) => {
               whileInView="show"
               viewport={{ once: true, amount: 0.3 }}
             >
-              {data?.logoImage ? (
+              {logoImage ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src={data.logoImage}
+                  src={logoImage}
                   alt={`${groomFullName} & ${brideFullName} Logo`}
                   className="w-full object-contain"
                 />
