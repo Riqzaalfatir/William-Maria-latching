@@ -134,7 +134,6 @@ export default function EventTemplate({ data: rawData }: TemplateProps) {
           <Rsvp data={data} paramUrl={paramUrl} />
           <Faq />
         </div>
-
         <div className="relative w-full">
           <div className="sticky top-0 h-dvh -z-10 -mb-[100dvh]">
             <ResponsiveVideo
