@@ -31,11 +31,11 @@ type TemplateProps = {
   dataValidation?: any;
 };
 
-export default function EventTemplate({ data }: TemplateProps) {
+export default function EventTemplate({ data: rawData }: TemplateProps) {
   const searchParams = useSearchParams();
 
-  const dataEvent = data?.dataEvent;
-  const dataContent = data?.dataContent;
+  const dataEvent = rawData?.dataEvent;     
+  const dataContent = rawData?.dataContent;   
 
   const {
     getEventGuestByPin,
@@ -92,9 +92,7 @@ export default function EventTemplate({ data }: TemplateProps) {
   const dataRsvp = smartRsvpQuestionByPin as any;
   const dataSession = eventSessionByPin as any;
 
-  // ⬇️ INI TAMBAHAN PENTING — gabung semuanya jadi 1 object RATA (flat),
-  // ini yang dioper ke semua komponen, BUKAN `data` mentah dari props
-  const mergedData = {
+  const data = {
     ...dataContent,
     ...dataEvent,
     dataSession,
@@ -129,15 +127,15 @@ export default function EventTemplate({ data }: TemplateProps) {
     <>
       <main className="block">
         <div className="overflow-x-hidden">
-          <Header/>
-          <Hero data={mergedData} />
-          <Profile data={mergedData} />
+          <Header />
+          <Hero data={data} />
+          <Profile data={data} />
           <Pengantin />
-          <EventOrder data={mergedData} />
-          <Gallery data={mergedData} />
+          <EventOrder data={data} />
+          <Gallery data={data} />
           <Quote />
           <Rsvp
-            data={mergedData}
+            data={data}
             guestName={dataGuest?.name}
             guestPhone={dataGuest?.phone}
             pin={pin}
@@ -154,8 +152,8 @@ export default function EventTemplate({ data }: TemplateProps) {
               className="w-full h-full object-cover"
             />
           </div>
-          <Wishes eventId={dataEvent?.id} data={mergedData} />
-          <Thankyou data={mergedData} />
+          <Wishes eventId={dataEvent?.id} data={data} />
+          <Thankyou data={data} />
         </div>
       </main>
 
@@ -163,7 +161,7 @@ export default function EventTemplate({ data }: TemplateProps) {
         <Opening
           setStart={setStart}
           namaTamu={dataGuest?.name ?? "Sela"}
-          data={mergedData}
+          data={data}
           onOpen={handleInvitationOpen}
         />
       )}
