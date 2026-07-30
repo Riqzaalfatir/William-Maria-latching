@@ -5,8 +5,6 @@ import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useEventUrl } from "@/hooks/api/useEventUrl";
 import { useEventContent } from "@/hooks/api/useEventContent";
-import { usePreloader } from "@/hooks/usePreloader";
-import LoadingScreen from "@/ui/LoadingScreen";
 import EventTemplate from "@/components/template";
 
 export default function EventPage() {
@@ -14,7 +12,6 @@ export default function EventPage() {
 
   const { getEventByUrl, eventByUrl, status, error } = useEventUrl();
   const { getEventContent, eventContentByEventId, status: contentStatus } = useEventContent();
-  const { progress } = usePreloader();
 
   useEffect(() => {
     if (id) {
@@ -33,9 +30,11 @@ export default function EventPage() {
 
   const dataContent = eventContentByEventId as any;
 
-  if (status === "loading" || status === "idle" || contentStatus === "loading") {
-    return <LoadingScreen progress={progress} onDone={() => {}} />;
-  }
+ // app/[id]/page.tsx
+
+if (status === "loading" || status === "idle" || contentStatus === "loading") {
+  return <div className="fixed inset-0 bg-[#F9FBFA]" />;
+}
 
   if (status === "error") {
     return (

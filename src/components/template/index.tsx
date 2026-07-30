@@ -34,8 +34,8 @@ type TemplateProps = {
 export default function EventTemplate({ data: rawData }: TemplateProps) {
   const searchParams = useSearchParams();
 
-  const dataEvent = rawData?.dataEvent;     
-  const dataContent = rawData?.dataContent;   
+  const dataEvent = rawData?.dataEvent;
+  const dataContent = rawData?.dataContent;
 
   const {
     getEventGuestByPin,
@@ -132,7 +132,7 @@ export default function EventTemplate({ data: rawData }: TemplateProps) {
           <Profile data={data} />
           <Pengantin />
           <EventOrder data={data} />
-          <Gallery data={data} />
+          <Gallery />
           <Quote />
           <Rsvp
             data={data}

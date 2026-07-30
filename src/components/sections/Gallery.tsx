@@ -9,9 +9,7 @@ import "yet-another-react-lightbox/plugins/counter.css";
 import { motion, PanInfo } from "framer-motion";
 import ResponsivePicture from "@/hooks/ResponsivePicture";
 
-type GalleryProps = { data?: any };
-
-const FALLBACK_IMAGES = [
+const galleryImages = [
   { mobile: "/images/gallery/Pengantin.webp", desktop: "/images/gallery/PengantinD.webp" },
   { mobile: "/images/gallery/Pengantin2.webp", desktop: "/images/gallery/PengantinD2.webp" },
   { mobile: "/images/gallery/Pengantin3.webp", desktop: "/images/gallery/PengantinD3.webp" },
@@ -23,35 +21,7 @@ const FALLBACK_IMAGES = [
 
 const AUTO_SLIDE_INTERVAL = 4000; // ms
 
-function normalizeGalleryData(
-  raw: any
-): { mobile: string; desktop: string }[] | null {
-  if (!Array.isArray(raw) || raw.length === 0) return null;
-
-  const urls: string[] = raw
-    .map((item) => {
-      let url: string | null = null;
-      if (typeof item === "string") url = item;
-      else if (item && typeof item === "object") {
-        url = item.url ?? item.image ?? item.imageUrl ?? item.src ?? null;
-      }
-      if (!url) return null;
-
-      return url.startsWith("http")
-        ? url
-        : `https://media.twinklebook.com/${url}`;
-    })
-    .filter((url): url is string => Boolean(url));
-
-  if (urls.length === 0) return null;
-
-  return urls.map((url) => ({ mobile: url, desktop: url }));
-}
-
-const Gallery = ({ data }: GalleryProps) => {
-  const galleryImages =
-    normalizeGalleryData(data?.galleryImageData) ?? FALLBACK_IMAGES;   
-
+const Gallery = () => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [current, setCurrent] = useState(0);
   const [trackWidth, setTrackWidth] = useState(0);
@@ -70,7 +40,6 @@ const Gallery = ({ data }: GalleryProps) => {
     return () => window.removeEventListener("resize", measure);
   }, []);
 
-  
   useEffect(() => {
     const mql = window.matchMedia("(min-width: 1024px)");
     setIsDesktop(mql.matches);
@@ -130,37 +99,37 @@ const Gallery = ({ data }: GalleryProps) => {
             ref={viewportRef}
             className="relative w-[87.18vw] lg:w-[1098px] overflow-hidden aspect-[340/700] lg:aspect-[1098/746]"
           >
-          <motion.div
-  className="flex h-full"
-  style={{
-    width: `${total * 100}%`,        
-    willChange: "transform",
-    touchAction: "pan-y",
-    cursor: "grab",
-  }}
-  drag="x"
-  dragConstraints={{ left: -trackWidth * (total - 1), right: 0 }}
-  dragElastic={0.15}
-  onDragEnd={handleDragEnd}
-  animate={{ x: `-${current * (100 / total)}%` }}   
-  transition={{ duration: 1.2, ease: [0.32, 0.72, 0, 1] }}
->
-  {galleryImages.map((img, i) => (
-    <div
-      key={i}
-      className="relative h-full shrink-0"
-      style={{ width: `${100 / total}%` }}  
-    >
-      <ResponsivePicture
-        mobileSrc={img.mobile}
-        desktopSrc={img.desktop}
-        alt={`Gallery ${i + 1}`}
-        fill={true}
-        className="object-cover"
-      />
-    </div>
-  ))}
-</motion.div>
+            <motion.div
+              className="flex h-full"
+              style={{
+                width: `${total * 100}%`,
+                willChange: "transform",
+                touchAction: "pan-y",
+                cursor: "grab",
+              }}
+              drag="x"
+              dragConstraints={{ left: -trackWidth * (total - 1), right: 0 }}
+              dragElastic={0.15}
+              onDragEnd={handleDragEnd}
+              animate={{ x: `-${current * (100 / total)}%` }}
+              transition={{ duration: 1.2, ease: [0.32, 0.72, 0, 1] }}
+            >
+              {galleryImages.map((img, i) => (
+                <div
+                  key={i}
+                  className="relative h-full shrink-0"
+                  style={{ width: `${100 / total}%` }}
+                >
+                  <ResponsivePicture
+                    mobileSrc={img.mobile}
+                    desktopSrc={img.desktop}
+                    alt={`Gallery ${i + 1}`}
+                    fill={true}
+                    className="object-cover"
+                  />
+                </div>
+              ))}
+            </motion.div>
           </div>
         </div>
       </section>
