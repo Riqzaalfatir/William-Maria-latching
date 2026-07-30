@@ -15,11 +15,14 @@ type ModalType = string | null;
 
 type RsvpProps = {
   data?: {
-    id?: string;
-    url?: string;
-    closeRSVPDate?: string;
-    invitationWAUrl?: string;
+    dataEvent?: {
+      id?: string;
+      url?: string;
+      closeRSVPDate?: string;
+      invitationWAUrl?: string;
+    };
   };
+  paramUrl?: string;
   guestName?: string;
   guestPhone?: string;
   pin?: string | null;
