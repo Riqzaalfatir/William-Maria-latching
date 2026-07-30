@@ -9,10 +9,14 @@ type OpeningProps = {
   setStart: (v: boolean) => void;
   namaTamu?: string;
   data?: {
-    date?: string;
-    groomFullName?: string;
-    brideFullName?: string;
-    logoImage?: string;
+    dataEvent?: {
+      date?: string;
+      groomFullName?: string;
+      brideFullName?: string;
+    };
+    dataContent?: {
+      logoImage?: string;
+    };
   };
   onOpen?: () => void;
 };
