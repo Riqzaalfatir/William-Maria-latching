@@ -11,12 +11,10 @@ type ModalType = string | null;
 
 type RsvpProps = {
   data?: {
-    dataEvent?: {
-      id?: string;
-      url?: string;
-      closeRSVPDate?: string;
-      invitationWAUrl?: string;
-    };
+    id?: string;
+    url?: string;
+    closeRSVPDate?: string;
+    invitationWAUrl?: string;
   };
   guestName?: string;
   guestPhone?: string;
@@ -78,32 +76,32 @@ const Rsvp = ({ data, guestName, guestPhone, pin }: RsvpProps) => {
   const [pilihan, setPilihan] = useState<Pilihan>(null);
   const [modalType, setModalType] = useState<ModalType>(null);
 
- const deadlineText = formatDeadlineDate(data?.dataEvent?.closeRSVPDate);
-const waHref = formatWaHref(data?.dataEvent?.invitationWAUrl);
-const waNumberForModal = data?.dataEvent?.invitationWAUrl ?? "6281234567890";
+  const deadlineText = formatDeadlineDate(data?.closeRSVPDate);        
+  const waHref = formatWaHref(data?.invitationWAUrl);                  
+  const waNumberForModal = data?.invitationWAUrl ?? "6281234567890";   
 
-const handleConfirm = (): void => {
-  if (!pilihan) {
-    setModalType("incomplete_rsvp");
-    return;
-  }
-  setModalType("confirm_rsvp");
-};
-
-const submitRsvp = async (): Promise<void> => {
-  const payload: RsvpSubmitPayload = {
-    eventId: data?.dataEvent?.id ?? "",
-    url: data?.dataEvent?.url ?? "",
-    pin: pin ?? "",
-    name: guestName ?? "",
-    phone: guestPhone ?? "",
-    status: mapPilihanToStatus(pilihan),
-    maybeDate: "",
-    maybeNote: "",
-    questionList: [],
+  const handleConfirm = (): void => {
+    if (!pilihan) {
+      setModalType("incomplete_rsvp");
+      return;
+    }
+    setModalType("confirm_rsvp");
   };
 
-  console.log("RSVP payload (draft, belum dikirim):", payload);
+  const submitRsvp = async (): Promise<void> => {
+    const payload: RsvpSubmitPayload = {
+      eventId: data?.id ?? "",     
+      url: data?.url ?? "",         
+      pin: pin ?? "",
+      name: guestName ?? "",
+      phone: guestPhone ?? "",
+      status: mapPilihanToStatus(pilihan),
+      maybeDate: "",
+      maybeNote: "",
+      questionList: [],
+    };
+
+    console.log("RSVP payload (draft, belum dikirim):", payload);
 
     // await fetch(`${BASE_URL}InputRSVP`, {
     //   method: "POST",

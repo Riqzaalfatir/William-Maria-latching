@@ -50,7 +50,7 @@ function normalizeGalleryData(
 
 const Gallery = ({ data }: GalleryProps) => {
   const galleryImages =
-    normalizeGalleryData(data?.dataContent?.galleryImageData) ?? FALLBACK_IMAGES;
+    normalizeGalleryData(data?.galleryImageData) ?? FALLBACK_IMAGES;   
 
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [current, setCurrent] = useState(0);

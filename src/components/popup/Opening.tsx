@@ -9,14 +9,10 @@ type OpeningProps = {
   setStart: (v: boolean) => void;
   namaTamu?: string;
   data?: {
-    dataEvent?: {
-      date?: string;
-      groomFullName?: string;
-      brideFullName?: string;
-    };
-    dataContent?: {
-      logoImage?: string;
-    };
+    date?: string;
+    groomFullName?: string;
+    brideFullName?: string;
+    logoImage?: string;
   };
   onOpen?: () => void;
 };
@@ -61,9 +57,9 @@ const Opening = ({
     }, 900);
   };
 
-  const eventDate = formatEventDate(data?.dataEvent?.date);
-  const groomFullName = data?.dataEvent?.groomFullName ?? "Nama";
-  const brideFullName = data?.dataEvent?.brideFullName ?? "Partner";
+  const eventDate = formatEventDate(data?.date);
+  const groomFullName = data?.groomFullName ?? "Nama";
+  const brideFullName = data?.brideFullName ?? "Partner";
 
   return (
     <AnimatePresence mode="wait">
@@ -97,9 +93,9 @@ const Opening = ({
               <p className="text-[12px] md:text-[18px] text-white font-athelas italic tracking-[5%]">
                 we invite you to celebrate
               </p>
-              {data?.dataContent?.logoImage ? (
+              {data?.logoImage ? (
                 <img
-                  src={data.dataContent.logoImage}
+                  src={data.logoImage}
                   alt="Wedding Logo"
                   className="w-[181px] h-[76px] md:w-[281px] md:h-[118px] pt-[4px] md:mt-[9px] object-contain"
                 />
@@ -143,4 +139,3 @@ const Opening = ({
 };
 
 export default Opening;
-

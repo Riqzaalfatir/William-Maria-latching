@@ -15,9 +15,7 @@ type ModalType = string | null;
 type WishesProps = {
   eventId?: string;
   data?: {
-    dataEvent?: {
-      invitationWAUrl?: string;
-    };
+    invitationWAUrl?: string;   
   };
 };
 
@@ -318,12 +316,12 @@ const Wishes = ({ eventId, data }: WishesProps) => {
         )}
       </section>
 
-    {modalType && (
+  {modalType && (
   <NotifModal
     type={modalType}
     onClose={() => setModalType(null)}
     onConfirm={() => setModalType(null)}
-    waNumber={data?.dataEvent?.invitationWAUrl ?? "6281234567890"}
+    waNumber={data?.invitationWAUrl ?? "6281234567890"}   
   />
 )}
     </>

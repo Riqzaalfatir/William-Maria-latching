@@ -7,22 +7,18 @@ import ResponsivePicture from "@/hooks/ResponsivePicture";
 
 type HeroProps = {
   data?: {
-    dataEvent?: {
-      groomFullName?: string;
-      brideFullName?: string;
-    };
-    dataContent?: {
-      bannerImage?: string;
-      logoImage?: string;
-    };
+    groomFullName?: string;
+    brideFullName?: string;
+    bannerImage?: string;
+    logoImage?: string;
   };
 };
 
 const Hero = ({ data }: HeroProps) => {
-  const groomFullName = data?.dataEvent?.groomFullName ?? "Groom";
-  const brideFullName = data?.dataEvent?.brideFullName ?? "Bride";
-  const bannerImage = data?.dataContent?.bannerImage;
-  const logoImage = data?.dataContent?.logoImage;
+  const groomFullName = data?.groomFullName ?? "Groom";      
+  const brideFullName = data?.brideFullName ?? "Bride";       
+  const bannerImage = data?.bannerImage;                      
+  const logoImage = data?.logoImage; 
 
   return (
     <div id="hero">
