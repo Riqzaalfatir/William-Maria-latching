@@ -37,10 +37,10 @@ export const scaleIn: Variants = {
 }
 
 export const popIn: Variants = {
-  hidden: { opacity: 0, scale: 0.85 },
+  hidden: { opacity: 0.5, scale: 0.85 },
   show: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 4.5, ease: "easeOut" }
+    transition: { duration: 0.9, ease: "easeOut" }
   }
 }

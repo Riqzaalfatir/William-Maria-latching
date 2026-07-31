@@ -38,10 +38,15 @@ function formatSessionTime(isoDate?: string): {
   return { value: `${hour}.${minute}`, meridiem };
 }
 
-function buildMapsLink(latLong?: string): string {
-  if (!latLong) return "https://maps.app.goo.gl/itNvPF8tGYZR4Whq9";
-  const [lat, lng] = latLong.split(",").map((s) => s.trim());
-  return `https://www.google.com/maps?q=${lat},${lng}`;
+function buildMapsLink(venueName?: string, latLong?: string): string {
+  if (venueName) {
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venueName)}`;
+  }
+  if (latLong) {
+    const [lat, lng] = latLong.split(",").map((s) => s.trim());
+    return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+  }
+  return "https://maps.app.goo.gl/itNvPF8tGYZR4Whq9";
 }
 
 const EventOrder = ({ data }: EventOrderProps) => {
@@ -61,20 +66,12 @@ const EventOrder = ({ data }: EventOrderProps) => {
   const ceremonyTime = formatSessionTime(ceremonySession?.date);
   const receptionTime = formatSessionTime(receptionSession?.date);
 
-  const ceremonyVenue =
-    ceremonySession?.address ||
-    ceremonySession?.addressName ||
-    "Putting Garden";
-
-  const receptionVenue =
-    receptionSession?.address ||
-    receptionSession?.addressName ||
-    "Intercontinental Hotel Bandung";
+  const ceremonyVenue = "Putting Garden";
+  const receptionVenue = "Intercontinental Hotel Bandung";
 
   const receptionHall = "GRAND BALLROOM";
 
-  const mapsLink = buildMapsLink(receptionSession?.latLong);
-
+const mapsLink = buildMapsLink(receptionVenue, receptionSession?.latLong);
   return (
     <section id="eventorder" className="">
       <div className="pt-[20.51vw] lg:pt-[116px]">

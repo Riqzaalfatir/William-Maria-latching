@@ -33,7 +33,7 @@ const cardVariants = {
     opacity: 0,
     scale: 0.93,
     y: 30,
-    transition: { duration: 0.9, ease: [0.4, 0, 0.2, 1] as const, delay: 0.1 },
+    transition: { duration: 0.9, ease: [0.4, 0, 0.2, 1]},
   },
 };
 
@@ -56,17 +56,13 @@ const Opening = ({
     onOpen?.();
     setOpen(false);
     document.body.style.overflow = "auto";
-    setTimeout(() => {
-      setStart(true);
-    }, 900);
+    setStart(true);
   };
 
   const eventDate = formatEventDate(data?.dataEvent?.date);
-  const groomFullName = data?.dataEvent?.groomFullName ?? "Nama";
-  const brideFullName = data?.dataEvent?.brideFullName ?? "Partner";
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" >
       {open && (
         <div className="fixed inset-0 z-[100] flex justify-center items-center px-4">
           <motion.div
@@ -120,7 +116,7 @@ const Opening = ({
                 Mr. /Mrs. / Ms.
               </p>
               <p className="text-[16px] md:text-[24px] text-white font-athelas font-bold pt-[7px] md:pt-[6px] break-words max-w-full uppercase leading-[15px] md:leading-[23px]">
-                {groomFullName} & {brideFullName}
+                {namaTamu}
               </p>
               <p className="text-[12px] md:text-[18px] text-white/90 font-athelas leading-[20px] md:leading-[31px] pt-[14px] md:pt-[21px] tracking-[5%] italic">
                 we sincerely apologize <br />

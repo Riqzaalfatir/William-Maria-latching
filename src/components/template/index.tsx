@@ -50,12 +50,13 @@ export default function EventTemplate({ data: rawData }: TemplateProps) {
     eventSessionByPinStatus: sessionStatus,
   } = useEventSessionByPin();
 
+  const guestReady = guestStatus === "success" || guestStatus === "error";
+  const { progress, loaded } = usePreloader(guestReady);
+
   const [start, setStart] = useState<boolean>(false);
   const [showLoading, setShowLoading] = useState<boolean>(true);
   const [pin, setPin] = useState<string | null>(null);
-  const { progress } = usePreloader();
   const videoRef = useRef<HTMLVideoElement>(null);
-
  useEffect(() => {
   if (!dataEvent?.url) return;
 
@@ -125,7 +126,7 @@ export default function EventTemplate({ data: rawData }: TemplateProps) {
       <main className="block">
         <div className="overflow-x-hidden">
           <Header />
-          <Hero data={data} paramUrl={paramUrl} onOpenInvite={handleInvitationOpen} />
+          <Hero data={data} paramUrl={paramUrl} onOpenInvite={handleInvitationOpen} start={start} />
           <Profile data={data} />
           <Pengantin />
           <EventOrder data={data} />
@@ -148,21 +149,19 @@ export default function EventTemplate({ data: rawData }: TemplateProps) {
         </div>
       </main>
 
-      {!start && (
-        <Opening
-          setStart={setStart}
-          namaTamu={dataGuest?.name ?? "Sela"}
-          data={data}
-          onOpen={handleInvitationOpen}
-        />
-      )}
+<Opening
+  setStart={setStart}
+  namaTamu={dataGuest?.name ?? "Sela"}
+  data={data}
+  onOpen={handleInvitationOpen}
+/>
 
-      {showLoading && (
-        <LoadingScreen
-          progress={progress}
-          onDone={() => setShowLoading(false)}
-        />
-      )}
+{showLoading && (
+  <LoadingScreen
+    progress={progress}
+    onDone={() => setShowLoading(false)}
+  />
+)}
     </>
   );
 }

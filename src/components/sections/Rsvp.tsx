@@ -83,8 +83,8 @@ const Rsvp = ({ data, paramUrl, guestName, guestPhone, pin }: RsvpProps) => {
   const [modalType, setModalType] = useState<ModalType>(null);
 
 const deadlineText = formatDeadlineDate(data?.dataEvent?.closeRSVPDate);
-const waHref = formatWaHref(data?.dataEvent?.invitationWAUrl);
-const waNumberForModal = data?.dataEvent?.invitationWAUrl ?? "6281234567890";
+const waHref = "6281998478131";
+const waNumberForModal = "6281998478131";
 
   const handleConfirm = (): void => {
     if (!pilihan) {

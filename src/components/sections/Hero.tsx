@@ -18,10 +18,11 @@ type HeroProps = {
   };
   paramUrl?: string;
   onOpenInvite?: () => void;
+    start?: boolean;
 };
 
-const Hero = ({ data, paramUrl, onOpenInvite }: HeroProps) => {
-  const groomFullName = data?.dataEvent?.groomFullName ?? "Groom";
+const Hero = ({ data, paramUrl, onOpenInvite, start }: HeroProps) => {
+    const groomFullName = data?.dataEvent?.groomFullName ?? "Groom";
   const brideFullName = data?.dataEvent?.brideFullName ?? "Bride";
   const bannerImage = data?.dataContent?.bannerImage;
   const logoImage = data?.dataContent?.logoImage;
@@ -42,8 +43,8 @@ const Hero = ({ data, paramUrl, onOpenInvite }: HeroProps) => {
           <motion.p
             variants={popIn}
             initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.3 }}
+                        animate={start ? "show" : "hidden"}
+
             className="text-white font-athelas text-[10px] lg:text-[18px] uppercase"
           >
             The Wedding of
@@ -53,8 +54,8 @@ const Hero = ({ data, paramUrl, onOpenInvite }: HeroProps) => {
             <motion.div
               variants={popIn}
               initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.3 }}
+                          animate={start ? "show" : "hidden"}
+
             >
               {logoImage ? (
                 // eslint-disable-next-line @next/next/no-img-element

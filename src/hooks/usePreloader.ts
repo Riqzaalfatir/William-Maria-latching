@@ -50,9 +50,9 @@ const IMAGES_COMMON = [
 const VIDEO_MOBILE = "/video/Wil-Maria-compressed.mp4";
 const VIDEO_DESKTOP = "/video/Wil-MariaD-compressed.mp4";
 
-export function usePreloader() {
-  const [progress, setProgress] = useState(0);
-  const [loaded, setLoaded] = useState(false);
+export function usePreloader(extraReady: boolean = true) {
+  const [assetsProgress, setAssetsProgress] = useState(0);
+  const [assetsLoaded, setAssetsLoaded] = useState(false);
 
   useEffect(() => {
     const isDesktop = window.innerWidth >= BREAKPOINT;
@@ -66,8 +66,8 @@ export function usePreloader() {
 
     if (total === 0) {
       const timer = setTimeout(() => {
-        setLoaded(true);
-        setProgress(100);
+        setAssetsLoaded(true);
+        setAssetsProgress(100);
       }, 0);
       return () => clearTimeout(timer);
     }
@@ -79,23 +79,26 @@ export function usePreloader() {
       img.src = src;
       img.onload = img.onerror = () => {
         count++;
-        setProgress(Math.round((count / total) * 100));
-        if (count === total) setLoaded(true);
+        setAssetsProgress(Math.round((count / total) * 100));
+        if (count === total) setAssetsLoaded(true);
       };
     });
 
     fetch(videoToLoad)
       .then(() => {
         count++;
-        setProgress(Math.round((count / total) * 100));
-        if (count === total) setLoaded(true);
+        setAssetsProgress(Math.round((count / total) * 100));
+        if (count === total) setAssetsLoaded(true);
       })
       .catch(() => {
         count++;
-        setProgress(Math.round((count / total) * 100));
-        if (count === total) setLoaded(true);
+        setAssetsProgress(Math.round((count / total) * 100));
+        if (count === total) setAssetsLoaded(true);
       });
   }, []);
+
+  const progress = assetsLoaded && !extraReady ? 99 : assetsProgress;
+  const loaded = assetsLoaded && extraReady;
 
   return { loaded, progress };
 }

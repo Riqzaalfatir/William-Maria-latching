@@ -44,9 +44,8 @@ const Profile = ({ data }: ProfileProps) => {
     data?.dataSession?.find((s) => s.name === "Cocktail & Reception") ??
     data?.dataSession?.[0];
 
-  const venue = receptionSession?.address ?? "INTERCONTINENTAL HOTEL BANDUNG";
-  const address =
-    receptionSession?.addressName ?? "Jl. Resor Dago Pakar Raya 2B, Bandung";
+  const venue = "INTERCONTINENTAL HOTEL BANDUNG";
+  const address = "Jl. Resor Dago Pakar Raya 2B, Bandung";
 
   return (
     <section id="profile">
