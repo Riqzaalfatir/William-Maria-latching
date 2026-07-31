@@ -33,7 +33,7 @@ const cardVariants = {
     opacity: 0,
     scale: 0.93,
     y: 30,
-    transition: { duration: 0.9, ease: [0.4, 0, 0.2, 1]},
+    transition: { duration: 0.9, ease: [0.4, 0, 0.2, 1] as const},
   },
 };
 
