@@ -47,7 +47,7 @@ export default function Home() {
       <main className="block">
         <div className="overflow-x-hidden">
           <Header />
-          <Hero />
+          <Hero start={start} />
           <Profile />
           <Pengantin />
           <EventOrder />
@@ -57,7 +57,6 @@ export default function Home() {
           <Faq />
         </div>
 
-        {/* Section video TIDAK dibungkus overflow-x-hidden, biar sticky-nya tetap ngerujuk ke viewport asli */}
         <div className="relative w-full">
           <div className="sticky top-0 h-dvh -z-10 -mb-[100dvh]">
             <ResponsiveVideo
@@ -72,7 +71,7 @@ export default function Home() {
         </div>
       </main>
 
-      {!start && <Opening setStart={setStart} namaTamu="Sela" />}
+      <Opening setStart={setStart} namaTamu="Sela" />
 
       {showLoading && (
         <LoadingScreen
