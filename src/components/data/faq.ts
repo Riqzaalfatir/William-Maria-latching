@@ -39,7 +39,7 @@ export const faqData: FAQSection[] = [
       {
         pertanyaan: "Can I bring a plus one?",
         jawaban: [
-          "We are keeping our celebration intimate and can only accommodate the guests specifically named on your invitation. We appreciate your understanding!",
+          "We are keeping our celebration intimate and can only accomodate the guests specifically named on your invitation and the number of guests (pax). We appreciate your understanding!",
         ],
       },
       {
@@ -52,7 +52,7 @@ export const faqData: FAQSection[] = [
           "Holy Matrimony (Garden Ceremony)\nFor our Holy Matrimony, we kindly encourage guests to wear neutral or earth-tone colors, such as beige, nude, brown, cream, or similar shades. Comfortable, casual attire with a relaxed resort feel is perfect for the garden setting.\n\nWe also recommend avoiding high heels, as the ceremony will be held on the lawn. Feel free to wear sunglasses during the ceremony if you'd like.",
           // "\n": "Reception (Evening Celebration)" nyambung ke kalimat berikutnya
           //   jadi 1 baris di desktop, patah baris di mobile.
-          "Reception (Evening Celebration)\nFor the reception, we kindly encourage ladies to wear a long black or navy evening dress, while gentlemen are requested to wear a formal suit. If you don't have a suit, a black dress shirt with formal trousers is absolutely welcome.",
+          "Reception (Evening Celebration)\nFor the Reception, we kindly encourage ladies to wear a long black or navy evening dress, while gentlemen are requested to wear a formal suit. If you don't have a suit, a black dress shirt with formal trousers is absolutely welcome.",
           // "\n": "Kindly Note," nyambung ke kalimat berikutnya jadi 1 baris
           //   di desktop, patah baris di mobile.
           "Kindly Note,\nWe kindly request that guests do not wear batik for both the Holy Matrimony and Reception. Thank you!",
