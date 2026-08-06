@@ -40,17 +40,22 @@ const galleryImages = [
   },
 ];
 
-const AUTO_SLIDE_INTERVAL = 4000; // ms
+const AUTO_SLIDE_INTERVAL = 3000;
+const TRANSITION_DURATION = 1.2;
+
+const trackImages = [...galleryImages, ...galleryImages, galleryImages[0]];
+const total = galleryImages.length;
+const loopTotal = trackImages.length;
 
 const Gallery = () => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [current, setCurrent] = useState(0);
+  const [instant, setInstant] = useState(false);
   const [trackWidth, setTrackWidth] = useState(0);
   const [isDesktop, setIsDesktop] = useState(false);
 
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const wasDragging = useRef(false);
-  const total = galleryImages.length;
 
   useEffect(() => {
     const measure = () => {
@@ -72,17 +77,30 @@ const Gallery = () => {
   useEffect(() => {
     if (lightboxOpen) return;
     const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % total);
+      setCurrent((prev) => Math.min(prev + 1, loopTotal - 1));
     }, AUTO_SLIDE_INTERVAL);
     return () => clearInterval(timer);
-  }, [lightboxOpen, current, total]);
+  }, [lightboxOpen]);
 
-  const goTo = useCallback(
-    (i: number) => {
-      setCurrent(((i % total) + total) % total);
-    },
-    [total],
-  );
+  useEffect(() => {
+    if (current !== loopTotal - 1) return;
+    const t = setTimeout(() => {
+      setInstant(true);
+      setCurrent(0);
+    }, TRANSITION_DURATION * 1000);
+    return () => clearTimeout(t);
+  }, [current]);
+
+  useEffect(() => {
+    if (!instant) return;
+    const id = requestAnimationFrame(() => setInstant(false));
+    return () => cancelAnimationFrame(id);
+  }, [instant]);
+
+  const goTo = useCallback((i: number) => {
+    setInstant(false);
+    setCurrent(() => Math.max(0, Math.min(loopTotal - 1, i)));
+  }, []);
 
   const handleDragEnd = (
     _e: MouseEvent | TouchEvent | PointerEvent,
@@ -106,6 +124,8 @@ const Gallery = () => {
     setLightboxOpen(true);
   };
 
+  const realIndex = current % total;
+
   return (
     <>
       <section
@@ -123,28 +143,35 @@ const Gallery = () => {
             <motion.div
               className="flex h-full"
               style={{
-                width: `${total * 100}%`,
+                width: `${loopTotal * 100}%`,
                 willChange: "transform",
                 touchAction: "pan-y",
                 cursor: "grab",
               }}
               drag="x"
-              dragConstraints={{ left: -trackWidth * (total - 1), right: 0 }}
+              dragConstraints={{
+                left: -trackWidth * (loopTotal - 1),
+                right: 0,
+              }}
               dragElastic={0.15}
               onDragEnd={handleDragEnd}
-              animate={{ x: `-${current * (100 / total)}%` }}
-              transition={{ duration: 1.2, ease: [0.32, 0.72, 0, 1] }}
+              animate={{ x: `-${current * (100 / loopTotal)}%` }}
+              transition={
+                instant
+                  ? { duration: 0 }
+                  : { duration: TRANSITION_DURATION, ease: [0.32, 0.72, 0, 1] }
+              }
             >
-              {galleryImages.map((img, i) => (
+              {trackImages.map((img, i) => (
                 <div
                   key={i}
                   className="relative h-full shrink-0"
-                  style={{ width: `${100 / total}%` }}
+                  style={{ width: `${100 / loopTotal}%` }}
                 >
                   <ResponsivePicture
                     mobileSrc={img.mobile}
                     desktopSrc={img.desktop}
-                    alt={`Gallery ${i + 1}`}
+                    alt={`Gallery ${(i % total) + 1}`}
                     fill={true}
                     className="object-cover"
                   />
@@ -158,7 +185,7 @@ const Gallery = () => {
       <Lightbox
         open={lightboxOpen}
         close={() => setLightboxOpen(false)}
-        index={current}
+        index={realIndex}
         slides={galleryImages.map((img) => ({
           src: isDesktop ? img.desktop : img.mobile,
         }))}
